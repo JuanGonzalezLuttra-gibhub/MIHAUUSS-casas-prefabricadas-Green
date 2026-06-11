@@ -441,8 +441,27 @@ img {
 }
 
 @media (max-width: 768px) {
+  .hero {
+    min-height: 80vh; /* Reduce el estiramiento vertical para evitar el zoom excesivo de la imagen */
+  }
+
+  .hero-bg {
+    object-position: 38% center; /* Centra el plano en el jardín y la piscina, mostrando además la casa */
+  }
+
   .hero-overlay {
-    background: rgba(253, 253, 253, 0.9);
+    background: rgba(253, 253, 253, 0.15); /* Overlay ultra ligero para conservar contraste y calidad de la imagen */
+  }
+
+  .hero-content {
+    background: rgba(253, 253, 253, 0.82); /* Fondo semi-translúcido */
+    backdrop-filter: blur(12px); /* Efecto de desenfoque de cristal */
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(253, 253, 253, 0.5);
+    border-radius: 8px;
+    padding: 32px 24px;
+    box-shadow: var(--shadow-lg);
+    margin: 20px 0;
   }
 }
 
@@ -1574,6 +1593,42 @@ textarea.form-input {
   .gallery-overlay {
     opacity: 1;
     background: linear-gradient(0deg, rgba(18, 21, 25, 0.85) 0%, rgba(18, 21, 25, 0.2) 100%);
+  }
+
+  /* Animaciones interactivas por Scroll y Toque en Móvil */
+  .benefit-card.scroll-active, .benefit-card.active-touch {
+    transform: translateY(-4px) !important;
+    border-color: var(--accent) !important;
+    box-shadow: var(--shadow-md) !important;
+  }
+  .benefit-card.scroll-active .benefit-icon, .benefit-card.active-touch .benefit-icon {
+    background-color: var(--accent) !important;
+    color: var(--text-primary) !important;
+  }
+
+  .review-card.scroll-active, .review-card.active-touch {
+    transform: translateY(-4px) !important;
+    border-color: var(--accent) !important;
+    box-shadow: var(--shadow-md) !important;
+  }
+
+  .timeline-item.scroll-active .timeline-dot, .timeline-item.active-touch .timeline-dot {
+    background-color: var(--accent) !important;
+    box-shadow: 0 0 0 6px rgba(194, 255, 0, 0.25) !important;
+  }
+  .timeline-item.scroll-active .timeline-content, .timeline-item.active-touch .timeline-content {
+    border-color: var(--accent) !important;
+    box-shadow: var(--shadow-sm) !important;
+  }
+
+  .faq-item.scroll-active, .faq-item.active-touch {
+    border-color: var(--accent) !important;
+    box-shadow: var(--shadow-sm) !important;
+  }
+
+  .wizard-option.scroll-active, .wizard-option.active-touch {
+    border-color: var(--accent) !important;
+    background-color: rgba(194, 255, 0, 0.05) !important;
   }
 }
 

@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initAccordions();
   initCalculator();
   initContactForm();
+  initMobileInteractions();
 });
 
 /* 1. Header Scroll & Active Links */
@@ -390,3 +391,64 @@ function initContactForm() {
   // ---- Init progress ----
   updateProgress();
 }
+
+/* 7. Mobile Interactive Highlights (Scroll & Touch) */
+function initMobileInteractions() {
+  // Solo se ejecuta en pantallas <= 768px de ancho
+  if (window.innerWidth > 768) return;
+
+  const targets = document.querySelectorAll('.benefit-card, .review-card, .timeline-item, .faq-item, .wizard-option');
+
+  // A. Iluminación por Scroll (añade .scroll-active cuando el elemento pasa por el centro de la pantalla)
+  if ('IntersectionObserver' in window) {
+    const observerOptions = {
+      root: null,
+      threshold: 0,
+      rootMargin: '-30% 0px -30% 0px' // Enfoca el 40% central de la pantalla
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('scroll-active');
+        } else {
+          entry.target.classList.remove('scroll-active');
+        }
+      });
+    }, observerOptions);
+
+    targets.forEach(target => observer.observe(target));
+  } else {
+    // Alternativa para navegadores que no soporten IntersectionObserver
+    window.addEventListener('scroll', () => {
+      const centerY = window.innerHeight / 2;
+      targets.forEach(target => {
+        const rect = target.getBoundingClientRect();
+        if (rect.top <= centerY + 100 && rect.bottom >= centerY - 100) {
+          target.classList.add('scroll-active');
+        } else {
+          target.classList.remove('scroll-active');
+        }
+      });
+    });
+  }
+
+  // B. Iluminación al Toque (añade .active-touch al tocar y lo retira al levantar el dedo)
+  targets.forEach(target => {
+    target.addEventListener('touchstart', () => {
+      target.classList.add('active-touch');
+    }, { passive: true });
+
+    target.addEventListener('touchend', () => {
+      // Pequeño retardo para que la iluminación sea perceptible
+      setTimeout(() => {
+        target.classList.remove('active-touch');
+      }, 150);
+    }, { passive: true });
+
+    target.addEventListener('touchcancel', () => {
+      target.classList.remove('active-touch');
+    }, { passive: true });
+  });
+}
+
